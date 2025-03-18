@@ -5,7 +5,7 @@ export default function OutlineButtonNav({ text, link }) {
     return(
         <div className="font-normal">
             <Link to={link} >
-                <button className="w-1/3 mt-3 mx-auto p-2 text-indigo-600 font-semibold border border-indigo-600">{text}</button>
+                <button className="w-full py-2 px-4 bg-[#113766] text-white font-bold rounded-3xl shadow-md hover:bg-[#0A2D57] focus:bg-[#08274E]">{text}</button>
             </Link>
         </div>
     )

@@ -4,12 +4,12 @@ import NewData from "./components/submitData/NewData";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import DeviceConnect from "./components/device/DeviceConnect";
 import Header from "./components/ui/Header";
-import Footer from "./components/ui/Footer";
 import LeftBlock from "./components/ui/LeftBlock";
 import SharedAccess from "./components/shared/SharedAccess";
 import { SerialPortProvider, useSerialPort } from "./SerialPortContext";
 import { WalletProvider, useWallet } from "./WalletContext";
 import WalletConnect from "./components/wallet/WalletConnect";
+import './App.css';
 
 
 
@@ -25,7 +25,7 @@ function AppContent() {
     hasDataToUpload 
   } = useSerialPort();
   const { 
-    isMetaMaskInstalled, 
+    // isMetaMaskInstalled, 
     isConnected, 
     isCorrectNetwork, 
     isLoading, 
@@ -72,26 +72,7 @@ function AppContent() {
       </div>
     );
   }
-  
-  // Check for MetaMask installation
-  if (!isMetaMaskInstalled) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-        <div className="max-w-md w-full p-8 bg-white shadow-md rounded-lg text-center">
-          <h1 className="text-2xl font-bold mb-6">MetaMask Required</h1>
-          <p className="mb-6">Please install MetaMask to use this application.</p>
-          <a 
-            href="https://metamask.io/download/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-full inline-block py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none"
-          >
-            Install MetaMask
-          </a>
-        </div>
-      </div>
-    );
-  }
+
 
   // If not on connect page, check wallet connection
   const currentPath = window.location.pathname;
@@ -100,7 +81,7 @@ function AppContent() {
   }
 
   return (
-    <div>
+    <div className="bg-[#000220] w-full h-screen text-white">
       <Routes>
         <Route path="/connect" element={<WalletConnect />} />
         <Route
@@ -119,20 +100,22 @@ function AppContent() {
           path="/dashboard"
           element={
             <>
-              <Header
-                deviceConnected={deviceConnected}
-                newDataAvailable={newDataAvailable}
-                newRequest={newRequest}
-                connectionStatus={connectionStatus}
-              />
-              <div className="w-full flex justify-start px-10 gap-10 mt-5 mb-10">
+              <div className="w-full flex justify-start">
                 <LeftBlock 
                   deviceConnected={deviceConnected}
                   onNewDataAvailable={newDataAvailable} 
                   address={"/dashboard"} 
                   onDisconnectDevice={disconnectDevice}
                 />
-                <Calendar />
+                <div className="w-full p-8 h-screen">
+                  <Header
+                  deviceConnected={deviceConnected}
+                  newDataAvailable={newDataAvailable}
+                  newRequest={newRequest}
+                  connectionStatus={connectionStatus}
+                />
+                  <Calendar />
+                </div>
               </div>
             </>
           }
@@ -141,27 +124,29 @@ function AppContent() {
           path="/addData"
           element={
             <>
-              <Header 
-                deviceConnected={deviceConnected} 
-                newRequest={newRequest}
-                newDataAvailable={newDataAvailable}
-                connectionStatus={connectionStatus}
-              />
-              <div className="w-full flex justify-start px-10 gap-10 mt-5 mb-10">
+              <div className="w-full flex justify-start">
                 <LeftBlock 
                   deviceConnected={deviceConnected}
                   onNewDataAvailable={newDataAvailable} 
                   address={"/dashboard"} 
                   onDisconnectDevice={disconnectDevice}
                 />
-                <NewData
-                  data={data}
-                  onDisconnectDevice={disconnectDevice}
-                  onSetNewDataAvailable={setNewDataAvailable}
-                  deviceConnected={deviceConnected}
-                  connectionStatus={connectionStatus}
-                  hasDataToUpload={hasDataToUpload}
-                />
+                <div className="w-full p-8 h-screen">
+                  <Header 
+                    deviceConnected={deviceConnected} 
+                    newRequest={newRequest}
+                    newDataAvailable={newDataAvailable}
+                    connectionStatus={connectionStatus}
+                  />
+                  <NewData
+                    data={data}
+                    onDisconnectDevice={disconnectDevice}
+                    onSetNewDataAvailable={setNewDataAvailable}
+                    deviceConnected={deviceConnected}
+                    connectionStatus={connectionStatus}
+                    hasDataToUpload={hasDataToUpload}
+                  />
+                </div>
               </div>
             </>
           }
@@ -170,38 +155,41 @@ function AppContent() {
           path="/sharedAccess"
           element={
             <>
-              <Header 
-                deviceConnected={deviceConnected} 
-                newRequest={newRequest}
-                newDataAvailable={newDataAvailable}
-                connectionStatus={connectionStatus}
-              />
-              <div className="w-full flex justify-start px-10 gap-10 mt-5 mb-10">
+              <div className="w-full flex justify-start gap-10">
                 <LeftBlock 
                   deviceConnected={deviceConnected}
                   onNewDataAvailable={newDataAvailable} 
                   address={"/sharedAccess"} 
                   onDisconnectDevice={disconnectDevice}
                 />
-                <SharedAccess hasNewRequest={newRequest} onRequestHandled={() => setNewRequest(false)} />
+                <div className="w-full p-8 h-screen">
+                  <Header 
+                    deviceConnected={deviceConnected} 
+                    newRequest={newRequest}
+                    newDataAvailable={newDataAvailable}
+                    connectionStatus={connectionStatus}
+                  />
+                  <SharedAccess hasNewRequest={newRequest} onRequestHandled={() => setNewRequest(false)} />
+                </div>
               </div>
             </>
           }
         />
       </Routes>
-      <Footer />
     </div>
   );
 }
 
 export default function App() {
   return (
-    <Router>
-      <WalletProvider>
-        <SerialPortProvider>
-            <AppContent />
-        </SerialPortProvider>
-      </WalletProvider>
-    </Router>
+    <div className="bg-[#000220] h-screen w-full text-white">
+      <Router>
+        <WalletProvider>
+          <SerialPortProvider>
+              <AppContent />
+          </SerialPortProvider>
+        </WalletProvider>
+      </Router>
+    </div>
   );
 }

@@ -3,7 +3,7 @@ import GhostButton from "./buttons/GhostButton";
 
 export default function Footer() {
     return(
-        <div className="mx-auto my-10 text-center text-indigo-600 bottom-0">
+        <div className="mx-auto p-3 rounded-2xl text-center bg-[#0E142E]">
             <GhostButton text={'About App'} />
         </div>
     );

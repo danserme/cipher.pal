@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ImagePlaceholder from "./icons/ImagePlaceholder";
 import Popup from "./Popup";
 
 export default function Header({ deviceConnected, newDataAvailable, newRequest, connectionStatus }) {
@@ -38,11 +37,8 @@ export default function Header({ deviceConnected, newDataAvailable, newRequest, 
   }, [connectionStatus, wasConnected]);
   
   return (
-    <header className="flex justify-start content-center px-10 gap-10 mt-5 mb-10">
-      <div className="w-1/3 bg-gray-200 my-auto py-4 rounded-full">
-        <ImagePlaceholder />
-      </div>
-      <div className="w-full self-center">
+    <header className="flex justify-start content-center gap-10 pb-10">
+      <div className="w-full self-center space-y-2">
         {/* Show only one popup at a time, with priority */}
         {showNoDataPopup && <Popup reason="noData" />}
         {!showNoDataPopup && !deviceConnected && <Popup reason="preview" />}
